@@ -17,22 +17,11 @@
       --radius: 10px; --radius-lg: 14px;
     }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; color: var(--text); background: var(--bg); min-height: 100vh; }
-    .app { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
-    .header { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; }
+    .app { max-width: 680px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+    .header { display: flex; align-items: center; gap: 12px; margin-bottom: 2rem; }
     .header-icon { width: 44px; height: 44px; background: var(--green-light); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 24px; }
     .header-title { font-size: 20px; font-weight: 600; }
     .header-sub { font-size: 13px; color: var(--text-sub); margin-top: 2px; }
-    .tab-bar { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
-    .tab { padding: 10px 22px; font-size: 14px; cursor: pointer; border-bottom: 2px solid transparent; color: var(--text-sub); transition: all 0.15s; background: none; border-top: none; border-left: none; border-right: none; }
-    .tab.active { color: var(--green-dark); border-bottom-color: var(--green-dark); font-weight: 600; }
-    .tab:hover:not(.active) { color: var(--text); }
-    .section { display: none; }
-    .section.active { display: block; }
-
-    /* form */
-    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 10px; margin-bottom: 1rem; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.25rem; }
-    .grid-3d { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 1.25rem; }
     .field-label { font-size: 13px; color: var(--text-sub); margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
     select, input[type=text], input[type=password], textarea {
       width: 100%; border: 1px solid var(--border); border-radius: var(--radius);
@@ -42,94 +31,41 @@
     select:focus, input:focus, textarea:focus { border-color: var(--green); }
     select { height: 40px; cursor: pointer; }
     textarea { resize: vertical; line-height: 1.6; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1rem; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 1.25rem; }
     .sec-div { font-size: 11px; font-weight: 600; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.08em; margin: 1.25rem 0 0.75rem; display: flex; align-items: center; gap: 8px; }
     .sec-div::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .btn-green { width: 100%; padding: 13px; background: var(--green); border: none; border-radius: var(--radius); color: white; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-green:hover { background: var(--green-dark); }
+    .btn-green:disabled { background: #ccc; cursor: not-allowed; }
+    .err { font-size: 13px; color: var(--red); margin-top: 8px; min-height: 18px; }
     .prompt-card { border-radius: var(--radius); padding: 10px 14px; margin-bottom: 7px; }
-    .pc-green { background: var(--green-light); }
-    .pc-amber { background: var(--amber-light); }
-    .pc-blue { background: var(--blue-light); }
+    .pc-green { background: var(--green-light); } .pc-amber { background: var(--amber-light); } .pc-blue { background: var(--blue-light); }
     .pc-title { font-size: 13px; font-weight: 600; }
     .pc-desc { font-size: 12px; margin-top: 2px; opacity: 0.85; }
-    .t-green { color: var(--green-dark); }
-    .t-amber { color: var(--amber); }
-    .t-blue { color: var(--blue); }
+    .t-green { color: var(--green-dark); } .t-amber { color: var(--amber); } .t-blue { color: var(--blue); }
     .char-hint { font-size: 12px; color: var(--text-hint); margin-top: 4px; text-align: right; }
     .textarea-wrap { margin-bottom: 1.25rem; }
-    .submit-btn { width: 100%; padding: 13px; background: var(--green); border: none; border-radius: var(--radius); color: white; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 0.25rem; transition: background 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .submit-btn:hover { background: var(--green-dark); }
-    .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
-    .err { font-size: 13px; color: var(--red); margin-top: 8px; min-height: 18px; }
-    .debug-box { background: var(--red-light); border-radius: var(--radius); padding: 10px 14px; margin-top: 8px; font-size: 12px; color: var(--red); display: none; word-break: break-all; }
+    .student-badge { background: var(--green-light); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 1.25rem; font-size: 14px; color: var(--green-dark); font-weight: 600; display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+    .logout-btn { font-size: 12px; color: var(--text-sub); background: none; border: none; cursor: pointer; text-decoration: underline; }
 
-    /* success */
+    /* 로그인 카드 */
+    .center-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem 1.5rem; max-width: 400px; margin: 2rem auto; }
+    .card-title { font-size: 17px; font-weight: 600; text-align: center; margin-bottom: 0.25rem; }
+    .card-sub { font-size: 13px; color: var(--text-sub); text-align: center; margin-bottom: 1.5rem; line-height: 1.6; }
+    .pin-input { letter-spacing: 0.3em; font-size: 20px; font-weight: 600; text-align: center; }
+
+    /* 성공 */
     .success-msg { display: none; text-align: center; padding: 3rem 1rem; }
     .success-icon { font-size: 56px; margin-bottom: 1rem; }
     .success-title { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
     .success-sub { font-size: 14px; color: var(--text-sub); }
     .new-entry-btn { margin-top: 1.5rem; padding: 10px 28px; border: 1px solid var(--border); border-radius: var(--radius); background: transparent; font-size: 14px; cursor: pointer; color: var(--text); }
-    .new-entry-btn:hover { background: var(--bg); }
 
-    /* lock */
-    .lock-screen { text-align: center; padding: 3rem 1rem; }
-    .lock-icon { font-size: 44px; margin-bottom: 1rem; }
-    .lock-title { font-size: 16px; font-weight: 600; margin-bottom: 1.25rem; color: var(--text); }
-    .lock-row { display: flex; gap: 8px; max-width: 300px; margin: 0 auto; }
-    .lock-btn { padding: 9px 20px; background: var(--green); border: none; border-radius: var(--radius); color: white; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; }
-    .lock-btn:hover { background: var(--green-dark); }
-    .lock-err { font-size: 13px; color: var(--red); margin-top: 8px; }
-
-    /* dashboard */
-    .dash-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.5rem; }
-    .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.9rem 1rem; }
-    .stat-label { font-size: 12px; color: var(--text-sub); margin-bottom: 5px; }
-    .stat-num { font-size: 24px; font-weight: 600; }
-    .dash-filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 1.25rem; }
-    .f-label { font-size: 13px; color: var(--text-sub); }
-    .ftag { padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); font-size: 13px; cursor: pointer; background: var(--card); color: var(--text-sub); transition: all 0.1s; }
-    .ftag.on { background: var(--green-light); border-color: var(--green); color: var(--green-dark); font-weight: 600; }
-    .search-row { display: flex; gap: 8px; margin-bottom: 1rem; }
-    .search-row input { flex: 1; }
-    .search-row select { width: 180px; flex-shrink: 0; }
-    .entries-list { display: flex; flex-direction: column; gap: 10px; }
-    .entry-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; cursor: pointer; transition: border-color 0.15s; }
-    .entry-card:hover { border-color: #ccc; }
-    .entry-card.expanded { border-color: var(--green); }
-    .entry-header { display: flex; justify-content: space-between; align-items: flex-start; }
-    .entry-left { flex: 1; }
-    .entry-who { font-size: 14px; font-weight: 600; }
-    .entry-date { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
-    .entry-topic { font-size: 12px; color: var(--blue); margin-top: 3px; }
-    .tag-row { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
-    .tag { font-size: 11px; padding: 2px 9px; border-radius: 20px; font-weight: 500; }
-    .tag-learn { background: var(--green-light); color: var(--green-dark); }
-    .tag-wonder { background: var(--amber-light); color: var(--amber); }
-    .tag-question { background: var(--blue-light); color: var(--blue); }
-    .alert-badge { font-size: 11px; padding: 2px 9px; border-radius: 20px; background: var(--red-light); color: var(--red); font-weight: 600; margin-left: 6px; }
-    .chevron { font-size: 18px; color: var(--text-sub); transition: transform 0.2s; margin-left: 8px; }
-    .entry-card.expanded .chevron { transform: rotate(180deg); }
-    .entry-body { display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
-    .entry-card.expanded .entry-body { display: block; }
-    .ebody-section { margin-bottom: 14px; }
-    .ebody-label { font-size: 12px; font-weight: 600; color: var(--text-sub); margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
-    .ebody-text { font-size: 14px; line-height: 1.75; color: var(--text); }
-    .ai-note { background: var(--amber-light); border-radius: var(--radius); padding: 10px 14px; margin-top: 8px; }
-    .ai-note-label { font-size: 12px; color: var(--amber); font-weight: 600; margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
-    .ai-note-text { font-size: 13px; color: #633806; line-height: 1.6; }
-    .student-group { margin-bottom: 1.25rem; }
-    .student-group-header { font-size: 13px; font-weight: 600; color: var(--text-sub); padding: 6px 0; border-bottom: 1px solid var(--border); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-    .empty { text-align: center; padding: 3rem 1rem; color: var(--text-sub); font-size: 14px; line-height: 1.8; }
-    .loading-msg { text-align: center; padding: 2rem; color: var(--text-sub); font-size: 14px; }
-    .dash-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-    .dash-top-title { font-size: 14px; font-weight: 600; }
-    .refresh-btn { padding: 7px 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); font-size: 13px; cursor: pointer; color: var(--text-sub); display: flex; align-items: center; gap: 5px; }
-    .refresh-btn:hover { background: var(--bg); }
-    @media (max-width: 540px) {
-      .grid-3 { grid-template-columns: 1fr 1fr; }
-      .grid-2 { grid-template-columns: 1fr; }
-      .grid-3d { grid-template-columns: 1fr 1fr; }
-      .dash-stats { grid-template-columns: repeat(2, 1fr); }
-      .search-row { flex-direction: column; }
-      .search-row select { width: 100%; }
+    @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    @media(max-width:540px){
+      .grid-2{grid-template-columns:1fr 1fr}
+      .grid-3{grid-template-columns:1fr 1fr}
     }
   </style>
 </head>
@@ -143,152 +79,150 @@
     </div>
   </div>
 
-  <div class="tab-bar">
-    <button class="tab active" onclick="switchTab('student')">📝 학생 입력</button>
-    <button class="tab" onclick="switchTab('teacher')">🔒 교사 대시보드</button>
-  </div>
-
-  <!-- 학생 입력 -->
-  <div class="section active" id="sec-student">
-    <div id="form-area">
-      <div class="sec-div">내 정보</div>
-      <div class="grid-3">
+  <!-- 1. 로그인 -->
+  <div id="student-login">
+    <div class="center-card">
+      <div class="card-title">🔐 로그인</div>
+      <div class="card-sub">반과 번호를 선택하고<br>비밀번호 4자리를 입력하세요</div>
+      <div class="grid-2">
         <div>
-          <div class="field-label"><i class="ti ti-users"></i> 반</div>
-          <select id="sel-class">
+          <div class="field-label">반</div>
+          <select id="login-class">
             <option value="">반 선택</option>
             <option>1반</option><option>2반</option><option>3반</option><option>4반</option>
             <option>5반</option><option>6반</option><option>7반</option><option>8반</option>
+            <option>9반</option><option>10반</option><option>11반</option>
           </select>
         </div>
         <div>
-          <div class="field-label"><i class="ti ti-hash"></i> 번호</div>
-          <select id="sel-num"><option value="">번호</option></select>
-        </div>
-        <div>
-          <div class="field-label"><i class="ti ti-user"></i> 이름</div>
-          <input type="text" id="inp-name" placeholder="이름 입력" maxlength="10" />
+          <div class="field-label">번호</div>
+          <select id="login-num"><option value="">번호</option></select>
         </div>
       </div>
-
-      <div class="sec-div">학습 주제</div>
-      <div class="grid-2">
-        <div>
-          <div class="field-label"><i class="ti ti-book"></i> 단원</div>
-          <select id="sel-unit" onchange="updateTopics()">
-            <option value="">단원 선택</option>
-          </select>
-        </div>
-        <div>
-          <div class="field-label"><i class="ti ti-list"></i> 소주제</div>
-          <select id="sel-topic"><option value="">소주제 선택</option></select>
-        </div>
+      <div style="margin-bottom:1rem">
+        <div class="field-label">비밀번호 (4자리)</div>
+        <input type="password" class="pin-input" id="login-pw" maxlength="4" placeholder="••••" onkeydown="if(event.key==='Enter')doLogin()" />
       </div>
-
-      <div class="sec-div">날짜</div>
-      <div class="grid-3d">
-        <div>
-          <div class="field-label"><i class="ti ti-calendar"></i> 월</div>
-          <select id="sel-month"><option value="">월</option></select>
-        </div>
-        <div>
-          <div class="field-label"><i class="ti ti-calendar"></i> 일</div>
-          <select id="sel-day"><option value="">일</option></select>
-        </div>
-        <div>
-          <div class="field-label"><i class="ti ti-calendar"></i> 요일</div>
-          <select id="sel-weekday">
-            <option value="">요일</option>
-            <option>월요일</option><option>화요일</option><option>수요일</option>
-            <option>목요일</option><option>금요일</option><option>토요일</option><option>일요일</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="sec-div">생각 정리</div>
-      <div class="textarea-wrap">
-        <div class="prompt-card pc-green">
-          <div class="pc-title t-green">✅ 오늘 배운 점</div>
-          <div class="pc-desc t-green">수업에서 새롭게 알게 된 내용을 내 말로 써 보세요.</div>
-        </div>
-        <textarea id="txt-learn" rows="4" placeholder="예) 오늘 세포에 핵, 세포막, 세포질이 있다는 것을 배웠다..."></textarea>
-        <div class="char-hint" id="hint-learn">0자</div>
-      </div>
-      <div class="textarea-wrap">
-        <div class="prompt-card pc-amber">
-          <div class="pc-title t-amber">🤔 이해가 안 되거나 헷갈리는 점</div>
-          <div class="pc-desc t-amber">잘 모르겠거나 의문이 생긴 부분을 솔직하게 적어 보세요.</div>
-        </div>
-        <textarea id="txt-wonder" rows="4" placeholder="예) 세포막이랑 세포벽이 다른 건지 헷갈린다..."></textarea>
-        <div class="char-hint" id="hint-wonder">0자</div>
-      </div>
-      <div class="textarea-wrap">
-        <div class="prompt-card pc-blue">
-          <div class="pc-title t-blue">💡 더 알고 싶은 점 / 궁금한 점</div>
-          <div class="pc-desc t-blue">더 깊이 알고 싶거나 수업 외에 궁금한 것을 써 보세요.</div>
-        </div>
-        <textarea id="txt-question" rows="4" placeholder="예) 사람 몸에 세포가 몇 개나 있는지 궁금하다..."></textarea>
-        <div class="char-hint" id="hint-question">0자</div>
-      </div>
-
-      <div class="err" id="err-msg"></div>
-      <div class="debug-box" id="debug-box"></div>
-      <button class="submit-btn" id="submit-btn" onclick="submitEntry()">
-        <i class="ti ti-check"></i> 생각 노트 저장하기
+      <div class="err" id="login-err"></div>
+      <button class="btn-green" onclick="doLogin()" style="margin-top:0.5rem">
+        <i class="ti ti-login"></i> 로그인
       </button>
-    </div>
-    <div class="success-msg" id="success-area">
-      <div class="success-icon">🌱</div>
-      <div class="success-title">생각 노트를 저장했어요!</div>
-      <div class="success-sub">선생님이 꼭 읽어볼 거예요. 잘했어요!</div>
-      <button class="new-entry-btn" onclick="resetForm()">새로 작성하기</button>
+      <div style="margin-top:1rem;font-size:12px;color:var(--text-hint);text-align:center">
+        처음 로그인 비밀번호는 <strong>7777</strong>입니다
+      </div>
     </div>
   </div>
 
-  <!-- 교사 대시보드 -->
-  <div class="section" id="sec-teacher">
-    <div id="lock-screen" class="lock-screen">
-      <div class="lock-icon">🔒</div>
-      <div class="lock-title">교사 대시보드 — 비밀번호를 입력하세요</div>
-      <div class="lock-row">
-        <input type="password" id="pw-input" placeholder="비밀번호" onkeydown="if(event.key==='Enter')checkPw()" />
-        <button class="lock-btn" onclick="checkPw()">확인</button>
+  <!-- 2. 비번 변경 -->
+  <div id="student-pw-change" style="display:none">
+    <div class="center-card">
+      <div class="card-title">🔑 비밀번호 변경</div>
+      <div class="card-sub">처음 로그인했어요!<br>나만의 비밀번호 4자리로 변경해 주세요.<br><span style="color:var(--red);font-weight:600">7777은 사용할 수 없어요.</span></div>
+      <div style="margin-bottom:1rem">
+        <div class="field-label">새 비밀번호 (4자리 숫자)</div>
+        <input type="password" class="pin-input" id="new-pw1" maxlength="4" placeholder="새 비밀번호" />
       </div>
-      <div class="lock-err" id="pw-err"></div>
+      <div style="margin-bottom:1rem">
+        <div class="field-label">새 비밀번호 확인</div>
+        <input type="password" class="pin-input" id="new-pw2" maxlength="4" placeholder="한 번 더 입력" onkeydown="if(event.key==='Enter')changePw()" />
+      </div>
+      <div class="err" id="pw-change-err"></div>
+      <button class="btn-green" onclick="changePw()" style="margin-top:0.5rem">
+        <i class="ti ti-check"></i> 비밀번호 설정하기
+      </button>
     </div>
-    <div id="dash-screen" style="display:none">
-      <div class="dash-top-row">
-        <div class="dash-top-title">전체 현황</div>
-        <button class="refresh-btn" onclick="renderDashboard()"><i class="ti ti-refresh"></i> 새로고침</button>
+  </div>
+
+  <!-- 3. 입력 폼 -->
+  <div id="form-area" style="display:none">
+    <div class="student-badge">
+      <span><i class="ti ti-user-check"></i> <span id="badge-name"></span>으로 입력 중</span>
+      <button class="logout-btn" onclick="doLogout()">로그아웃</button>
+    </div>
+
+    <div class="sec-div">이름</div>
+    <div style="margin-bottom:1.25rem">
+      <div class="field-label"><i class="ti ti-user"></i> 이름</div>
+      <input type="text" id="inp-name" placeholder="이름을 입력하세요" maxlength="10" />
+    </div>
+
+    <div class="sec-div">학습 주제</div>
+    <div class="grid-2" style="margin-bottom:1.25rem">
+      <div>
+        <div class="field-label"><i class="ti ti-book"></i> 단원</div>
+        <select id="sel-unit" onchange="updateTopics()"><option value="">단원 선택</option></select>
       </div>
-      <div class="dash-stats">
-        <div class="stat-card"><div class="stat-label">전체 기록</div><div class="stat-num" id="stat-total">—</div></div>
-        <div class="stat-card"><div class="stat-label">참여 학생</div><div class="stat-num" id="stat-students">—</div></div>
-        <div class="stat-card"><div class="stat-label">오개념 의심</div><div class="stat-num" style="color:var(--red)" id="stat-flag">—</div></div>
-        <div class="stat-card"><div class="stat-label">질문 있음</div><div class="stat-num" style="color:var(--blue)" id="stat-q">—</div></div>
+      <div>
+        <div class="field-label"><i class="ti ti-list"></i> 소주제</div>
+        <select id="sel-topic"><option value="">소주제 선택</option></select>
       </div>
-      <div class="dash-filters">
-        <span class="f-label">필터:</span>
-        <button class="ftag on" onclick="setFilter('all',this)">전체</button>
-        <button class="ftag" onclick="setFilter('wonder',this)">헷갈리는 점</button>
-        <button class="ftag" onclick="setFilter('question',this)">궁금한 점</button>
-        <button class="ftag" onclick="setFilter('flag',this)">⚠️ 오개념 의심</button>
+    </div>
+
+    <div class="sec-div">날짜</div>
+    <div class="grid-3">
+      <div>
+        <div class="field-label"><i class="ti ti-calendar"></i> 월</div>
+        <select id="sel-month"><option value="">월</option></select>
       </div>
-      <div class="search-row">
-        <input type="text" id="search-name" placeholder="이름 또는 반 검색..." oninput="renderDashboard()" />
-        <select id="filter-unit" onchange="renderDashboard()">
-          <option value="">전체 단원</option>
+      <div>
+        <div class="field-label"><i class="ti ti-calendar"></i> 일</div>
+        <select id="sel-day"><option value="">일</option></select>
+      </div>
+      <div>
+        <div class="field-label"><i class="ti ti-calendar"></i> 요일</div>
+        <select id="sel-weekday">
+          <option value="">요일</option>
+          <option>월요일</option><option>화요일</option><option>수요일</option>
+          <option>목요일</option><option>금요일</option><option>토요일</option><option>일요일</option>
         </select>
       </div>
-      <div class="entries-list" id="entries-list"><div class="loading-msg">불러오는 중...</div></div>
     </div>
+
+    <div class="sec-div">생각 정리</div>
+    <div class="textarea-wrap">
+      <div class="prompt-card pc-green">
+        <div class="pc-title t-green">✅ 오늘 배운 점</div>
+        <div class="pc-desc t-green">수업에서 새롭게 알게 된 내용을 내 말로 써 보세요.</div>
+      </div>
+      <textarea id="txt-learn" rows="4" placeholder="예) 오늘 세포에 핵, 세포막, 세포질이 있다는 것을 배웠다..."></textarea>
+      <div class="char-hint" id="hint-learn">0자</div>
+    </div>
+    <div class="textarea-wrap">
+      <div class="prompt-card pc-amber">
+        <div class="pc-title t-amber">🤔 이해가 안 되거나 헷갈리는 점</div>
+        <div class="pc-desc t-amber">잘 모르겠거나 의문이 생긴 부분을 솔직하게 적어 보세요.</div>
+      </div>
+      <textarea id="txt-wonder" rows="4" placeholder="예) 세포막이랑 세포벽이 다른 건지 헷갈린다..."></textarea>
+      <div class="char-hint" id="hint-wonder">0자</div>
+    </div>
+    <div class="textarea-wrap">
+      <div class="prompt-card pc-blue">
+        <div class="pc-title t-blue">💡 더 알고 싶은 점 / 궁금한 점</div>
+        <div class="pc-desc t-blue">더 깊이 알고 싶거나 수업 외에 궁금한 것을 써 보세요.</div>
+      </div>
+      <textarea id="txt-question" rows="4" placeholder="예) 사람 몸에 세포가 몇 개나 있는지 궁금하다..."></textarea>
+      <div class="char-hint" id="hint-question">0자</div>
+    </div>
+
+    <div class="err" id="err-msg"></div>
+    <button class="btn-green" id="submit-btn" onclick="submitEntry()">
+      <i class="ti ti-check"></i> 생각 노트 저장하기
+    </button>
+  </div>
+
+  <!-- 4. 성공 -->
+  <div class="success-msg" id="success-area">
+    <div class="success-icon">🌱</div>
+    <div class="success-title">생각 노트를 저장했어요!</div>
+    <div class="success-sub">선생님이 꼭 읽어볼 거예요. 잘했어요!</div>
+    <button class="new-entry-btn" onclick="resetForm()">새로 작성하기</button>
   </div>
 </div>
 
 <script>
 const SUPABASE_URL = 'https://yxbruzxavuncxsyyidcs.supabase.co';
 const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4YnJ1enhhdnVuY3hzeXlpZGNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyODEyMjksImV4cCI6MjA5Njg1NzIyOX0.4bTYBICQRQZDEO2RN8pKrnTqUtOMQfRGR58EJ4Yuz54';
-const TEACHER_PW = 'science2025';
+const DEFAULT_PW = '7777';
 
 const CURRICULUM = [
   { unit: '1단원. 과학과 인류의 지속가능한 삶', topics: ['과학적 탐구 방법','과학과 인류 문명','첨단 과학기술과 미래사회','과학기술과 지속가능한 삶','지속가능한 삶을 위한 활동 방안 실천하기'] },
@@ -300,31 +234,27 @@ const CURRICULUM = [
   { unit: '7단원. 태양계', topics: ['태양계의 구성 천체','태양계 행성 분류','태양의 활동','지구의 자전과 천체의 겉보기 운동','지구의 공전과 별자리 변화','달의 위상 변화','일식과 월식'] }
 ];
 
+let currentStudent = null;
+
 (function init() {
+  const loginNum = document.getElementById('login-num');
   for (let i = 1; i <= 40; i++) {
-    const o = document.createElement('option'); o.value = i; o.textContent = i + '번';
-    document.getElementById('sel-num').appendChild(o);
+    const o = document.createElement('option'); o.value = i; o.textContent = i + '번'; loginNum.appendChild(o);
   }
   const monthSel = document.getElementById('sel-month');
   for (let m = 1; m <= 12; m++) {
-    const o = document.createElement('option'); o.value = m; o.textContent = m + '월';
-    monthSel.appendChild(o);
+    const o = document.createElement('option'); o.value = m; o.textContent = m + '월'; monthSel.appendChild(o);
   }
   monthSel.addEventListener('change', updateDays);
-
   CURRICULUM.forEach((c, i) => {
-    const o1 = document.createElement('option'); o1.value = i; o1.textContent = c.unit;
-    document.getElementById('sel-unit').appendChild(o1);
-    const o2 = document.createElement('option'); o2.value = i; o2.textContent = c.unit;
-    document.getElementById('filter-unit').appendChild(o2);
+    const o = document.createElement('option'); o.value = i; o.textContent = c.unit;
+    document.getElementById('sel-unit').appendChild(o);
   });
-
   ['learn','wonder','question'].forEach(k => {
     document.getElementById('txt-' + k).addEventListener('input', function() {
       document.getElementById('hint-' + k).textContent = this.value.length + '자';
     });
   });
-
   const today = new Date();
   monthSel.value = today.getMonth() + 1;
   updateDays();
@@ -355,30 +285,11 @@ function updateTopics() {
   });
 }
 
-function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', (tab==='student')===(i===0)));
-  document.getElementById('sec-student').classList.toggle('active', tab==='student');
-  document.getElementById('sec-teacher').classList.toggle('active', tab==='teacher');
-}
-
-function checkPw() {
-  const val = document.getElementById('pw-input').value;
-  if (val === TEACHER_PW) {
-    document.getElementById('lock-screen').style.display = 'none';
-    document.getElementById('dash-screen').style.display = 'block';
-    renderDashboard();
-  } else {
-    document.getElementById('pw-err').textContent = '비밀번호가 틀렸습니다.';
-    document.getElementById('pw-input').value = '';
-  }
-}
-
 async function sbRequest(path, method, body) {
   const opts = {
     method: method || 'GET',
     headers: {
-      'apikey': ANON_KEY,
-      'Authorization': 'Bearer ' + ANON_KEY,
+      'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY,
       'Content-Type': 'application/json',
       'Prefer': method === 'POST' ? 'return=minimal' : 'return=representation'
     }
@@ -390,6 +301,68 @@ async function sbRequest(path, method, body) {
   return text ? JSON.parse(text) : null;
 }
 
+async function doLogin() {
+  const cls = document.getElementById('login-class').value;
+  const num = document.getElementById('login-num').value;
+  const pw = document.getElementById('login-pw').value.trim();
+  const errEl = document.getElementById('login-err');
+  if (!cls || !num) { errEl.textContent = '반과 번호를 선택해 주세요.'; return; }
+  if (!pw || pw.length !== 4 || !/^\d{4}$/.test(pw)) { errEl.textContent = '4자리 숫자 비밀번호를 입력해 주세요.'; return; }
+  errEl.textContent = '';
+  try {
+    const rows = await sbRequest(`student_passwords?cls=eq.${encodeURIComponent(cls)}&num=eq.${num}&select=password`, 'GET');
+    if (!rows || rows.length === 0) {
+      if (pw === DEFAULT_PW) {
+        await sbRequest('student_passwords', 'POST', { cls, num: parseInt(num), password: DEFAULT_PW });
+        currentStudent = { cls, num: parseInt(num) };
+        showPwChange();
+      } else { errEl.textContent = '처음 비밀번호는 7777이에요.'; }
+    } else {
+      if (pw === rows[0].password) {
+        currentStudent = { cls, num: parseInt(num) };
+        rows[0].password === DEFAULT_PW ? showPwChange() : showForm();
+      } else { errEl.textContent = '비밀번호가 틀렸어요.'; }
+    }
+  } catch(e) { errEl.textContent = '오류: ' + e.message; }
+}
+
+function showPwChange() {
+  document.getElementById('student-login').style.display = 'none';
+  document.getElementById('student-pw-change').style.display = 'block';
+}
+
+async function changePw() {
+  const pw1 = document.getElementById('new-pw1').value.trim();
+  const pw2 = document.getElementById('new-pw2').value.trim();
+  const errEl = document.getElementById('pw-change-err');
+  if (!pw1 || pw1.length !== 4 || !/^\d{4}$/.test(pw1)) { errEl.textContent = '4자리 숫자를 입력해 주세요.'; return; }
+  if (pw1 === DEFAULT_PW) { errEl.textContent = '7777은 사용할 수 없어요.'; return; }
+  if (pw1 !== pw2) { errEl.textContent = '비밀번호가 일치하지 않아요.'; return; }
+  errEl.textContent = '';
+  try {
+    await sbRequest(`student_passwords?cls=eq.${encodeURIComponent(currentStudent.cls)}&num=eq.${currentStudent.num}`, 'PATCH', { password: pw1, updated_at: new Date().toISOString() });
+    showForm();
+  } catch(e) { document.getElementById('pw-change-err').textContent = '오류: ' + e.message; }
+}
+
+function showForm() {
+  document.getElementById('student-login').style.display = 'none';
+  document.getElementById('student-pw-change').style.display = 'none';
+  document.getElementById('form-area').style.display = 'block';
+  document.getElementById('success-area').style.display = 'none';
+  document.getElementById('badge-name').textContent = currentStudent.cls + ' ' + currentStudent.num + '번';
+}
+
+function doLogout() {
+  currentStudent = null;
+  document.getElementById('student-login').style.display = 'block';
+  document.getElementById('student-pw-change').style.display = 'none';
+  document.getElementById('form-area').style.display = 'none';
+  document.getElementById('success-area').style.display = 'none';
+  document.getElementById('login-pw').value = '';
+  document.getElementById('login-err').textContent = '';
+}
+
 function detectMisconcept(text) {
   if (!text) return false;
   const kw = ['아닌가요','아닌것같','아닌 것 같','틀린','다른것같','다른 것 같','이상한','맞나요','맞는지','반대로','잘못','헷갈','모르겠','이해가 안','이해안'];
@@ -397,8 +370,6 @@ function detectMisconcept(text) {
 }
 
 async function submitEntry() {
-  const cls = document.getElementById('sel-class').value;
-  const num = document.getElementById('sel-num').value;
   const name = document.getElementById('inp-name').value.trim();
   const unitIdx = document.getElementById('sel-unit').value;
   const topic = document.getElementById('sel-topic').value;
@@ -409,34 +380,27 @@ async function submitEntry() {
   const wonder = document.getElementById('txt-wonder').value.trim();
   const question = document.getElementById('txt-question').value.trim();
   const errEl = document.getElementById('err-msg');
-  const dbgEl = document.getElementById('debug-box');
-
-  if (!cls || !num || !name) { errEl.textContent = '반, 번호, 이름을 모두 입력해 주세요.'; return; }
+  if (!name) { errEl.textContent = '이름을 입력해 주세요.'; return; }
   if (unitIdx === '' || !topic) { errEl.textContent = '단원과 소주제를 선택해 주세요.'; return; }
   if (!month || !day || !weekday) { errEl.textContent = '날짜와 요일을 선택해 주세요.'; return; }
   if (!learn && !wonder && !question) { errEl.textContent = '최소 한 가지 생각을 작성해 주세요.'; return; }
-  errEl.textContent = ''; dbgEl.style.display = 'none';
-
+  errEl.textContent = '';
   const btn = document.getElementById('submit-btn');
   btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader-2" style="animation:spin 1s linear infinite"></i> 저장 중...';
-
   try {
     await sbRequest('entries', 'POST', {
-      cls, num: parseInt(num), name,
-      unit: CURRICULUM[parseInt(unitIdx)].unit,
-      topic, month: parseInt(month), day: parseInt(day), weekday,
-      learn: learn || null, wonder: wonder || null, question: question || null,
+      cls: currentStudent.cls, num: currentStudent.num, name,
+      unit: CURRICULUM[parseInt(unitIdx)].unit, topic,
+      month: parseInt(month), day: parseInt(day), weekday,
+      learn: learn||null, wonder: wonder||null, question: question||null,
       flagged: detectMisconcept(wonder)
     });
-    btn.disabled = false;
-    btn.innerHTML = '<i class="ti ti-check"></i> 생각 노트 저장하기';
+    btn.disabled = false; btn.innerHTML = '<i class="ti ti-check"></i> 생각 노트 저장하기';
     document.getElementById('form-area').style.display = 'none';
     document.getElementById('success-area').style.display = 'block';
   } catch(e) {
-    errEl.textContent = '저장 중 오류가 발생했어요.';
-    dbgEl.style.display = 'block'; dbgEl.textContent = e.message;
-    btn.disabled = false;
-    btn.innerHTML = '<i class="ti ti-check"></i> 생각 노트 저장하기';
+    errEl.textContent = '저장 오류: ' + e.message;
+    btn.disabled = false; btn.innerHTML = '<i class="ti ti-check"></i> 생각 노트 저장하기';
   }
 }
 
@@ -448,88 +412,7 @@ function resetForm() {
     document.getElementById('hint-' + k).textContent = '0자';
   });
 }
-
-let currentFilter = 'all';
-function setFilter(f, btn) {
-  currentFilter = f;
-  document.querySelectorAll('.ftag').forEach(t => t.classList.remove('on'));
-  btn.classList.add('on');
-  renderDashboard();
-}
-
-async function renderDashboard() {
-  const listEl = document.getElementById('entries-list');
-  listEl.innerHTML = '<div class="loading-msg">Supabase에서 불러오는 중...</div>';
-  try {
-    const all = await sbRequest('entries?select=*&order=created_at.asc', 'GET');
-    document.getElementById('stat-total').textContent = all.length;
-    const uniq = new Set(all.map(e => e.cls + e.num + e.name));
-    document.getElementById('stat-students').textContent = uniq.size;
-    document.getElementById('stat-flag').textContent = all.filter(e => e.flagged).length;
-    document.getElementById('stat-q').textContent = all.filter(e => e.question).length;
-
-    const searchVal = (document.getElementById('search-name').value || '').trim().toLowerCase();
-    const unitVal = document.getElementById('filter-unit').value;
-    let filtered = [...all];
-    if (currentFilter === 'wonder') filtered = filtered.filter(e => e.wonder);
-    else if (currentFilter === 'question') filtered = filtered.filter(e => e.question);
-    else if (currentFilter === 'flag') filtered = filtered.filter(e => e.flagged);
-    if (searchVal) filtered = filtered.filter(e => (e.name + e.cls).toLowerCase().includes(searchVal));
-    if (unitVal !== '') filtered = filtered.filter(e => e.unit === CURRICULUM[parseInt(unitVal)].unit);
-
-    if (filtered.length === 0) { listEl.innerHTML = '<div class="empty">해당 조건의 기록이 없어요.</div>'; return; }
-
-    const grouped = {};
-    filtered.forEach(e => {
-      const key = e.cls + '|' + e.num + '|' + e.name;
-      if (!grouped[key]) grouped[key] = [];
-      grouped[key].push(e);
-    });
-
-    listEl.innerHTML = '';
-    Object.entries(grouped).forEach(([key, entries]) => {
-      const [cls, num, name] = key.split('|');
-      const grp = document.createElement('div');
-      grp.className = 'student-group';
-      grp.innerHTML = `<div class="student-group-header"><i class="ti ti-user"></i> ${cls} ${num}번 ${name} <span style="font-weight:400;font-size:12px">· ${entries.length}개 기록</span></div>`;
-      entries.slice().reverse().forEach(e => {
-        const card = document.createElement('div');
-        card.className = 'entry-card';
-        card.innerHTML = `
-          <div class="entry-header">
-            <div class="entry-left">
-              <div class="entry-who">${e.cls} ${e.num}번 ${e.name}${e.flagged?'<span class="alert-badge">⚠️ 오개념 의심</span>':''}</div>
-              <div class="entry-date">${e.month}월 ${e.day}일 ${e.weekday}</div>
-              <div class="entry-topic"><i class="ti ti-book" style="font-size:12px"></i> ${e.unit.split('.')[0]}. ${e.topic}</div>
-            </div>
-            <i class="ti ti-chevron-down chevron"></i>
-          </div>
-          <div class="tag-row">
-            ${e.learn?'<span class="tag tag-learn">✅ 배운 점</span>':''}
-            ${e.wonder?'<span class="tag tag-wonder">🤔 헷갈리는 점</span>':''}
-            ${e.question?'<span class="tag tag-question">💡 궁금한 점</span>':''}
-          </div>
-          <div class="entry-body">
-            ${e.learn?`<div class="ebody-section"><div class="ebody-label t-green"><i class="ti ti-check"></i> 오늘 배운 점</div><div class="ebody-text">${esc(e.learn)}</div></div>`:''}
-            ${e.wonder?`<div class="ebody-section"><div class="ebody-label t-amber"><i class="ti ti-help"></i> 헷갈리는 점</div><div class="ebody-text">${esc(e.wonder)}</div>${e.flagged?`<div class="ai-note"><div class="ai-note-label"><i class="ti ti-alert-triangle"></i> 오개념 의심 포인트</div><div class="ai-note-text">학생이 기존 지식과 상충하는 내용을 인식하고 있습니다. 다음 수업에서 확인·교정이 필요할 수 있어요.</div></div>`:''}</div>`:''}
-            ${e.question?`<div class="ebody-section"><div class="ebody-label t-blue"><i class="ti ti-bulb"></i> 더 알고 싶은 점</div><div class="ebody-text">${esc(e.question)}</div></div>`:''}
-          </div>`;
-        card.onclick = () => card.classList.toggle('expanded');
-        grp.appendChild(card);
-      });
-      listEl.appendChild(grp);
-    });
-  } catch(e) {
-    listEl.innerHTML = `<div class="empty">데이터를 불러오지 못했어요.<br><small style="color:var(--red)">${e.message}</small></div>`;
-  }
-}
-
-function esc(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
-}
 </script>
-<style>
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-</style>
+<style>@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}</style>
 </body>
 </html>

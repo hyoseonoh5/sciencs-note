@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>과학 생각 노트 — 교사 대시보드</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.11.0/dist/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #1D9E75; --green-dark: #0F6E56; --green-light: #E1F5EE;
+      --amber-light: #FAEEDA; --amber: #854F0B;
+      --blue-light: #E6F1FB; --blue: #185FA5;
+      --red-light: #FCEBEB; --red: #A32D2D;
+      --border: #e2e2e2; --bg: #f9f9f7; --card: #ffffff;
+      --text: #1a1a1a; --text-sub: #666; --text-hint: #aaa;
+      --radius: 10px; --radius-lg: 14px;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; color: var(--text); background: var(--bg); min-height: 100vh; }
+    .app { max-width: 800px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+    .header { display: flex; align-items: center; gap: 12px; margin-bottom: 2rem; }
+    .header-icon { width: 44px; height: 44px; background: var(--green-light); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 24px; }
+    .header-title { font-size: 20px; font-weight: 600; }
+    .header-sub { font-size: 13px; color: var(--text-sub); margin-top: 2px; }
+    select, input[type=text], input[type=password], textarea {
+      width: 100%; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 9px 12px; font-family: inherit; font-size: 14px; color: var(--text);
+      background: var(--card); outline: none; transition: border-color 0.15s;
+    }
+    select:focus, input:focus { border-color: var(--green); }
+    select { height: 40px; cursor: pointer; }
+    .btn-green { padding: 10px 20px; background: var(--green); border: none; border-radius: var(--radius); color: white; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: background 0.15s; }
+    .btn-green:hover { background: var(--green-dark); }
+    .btn-green:disabled { background: #ccc; cursor: not-allowed; }
+    .btn-outline { padding: 8px 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); font-size: 13px; cursor: pointer; color: var(--text-sub); display: inline-flex; align-items: center; gap: 5px; }
+    .btn-outline:hover { background: var(--bg); }
+    .btn-red { padding: 8px 16px; border: 1px solid #ffcccc; border-radius: var(--radius); background: var(--red-light); font-size: 13px; cursor: pointer; color: var(--red); display: inline-flex; align-items: center; gap: 5px; font-weight: 600; }
+    .btn-red:hover { background: #f5d0d0; }
+    .err { font-size: 13px; color: var(--red); margin-top: 8px; }
+
+    /* 잠금 화면 */
+    .lock-wrap { display: flex; align-items: center; justify-content: center; min-height: 60vh; }
+    .lock-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2.5rem 2rem; width: 100%; max-width: 380px; text-align: center; }
+    .lock-icon { font-size: 44px; margin-bottom: 1rem; }
+    .lock-title { font-size: 17px; font-weight: 600; margin-bottom: 0.5rem; }
+    .lock-sub { font-size: 13px; color: var(--text-sub); margin-bottom: 1.5rem; }
+    .lock-input-wrap { display: flex; gap: 8px; }
+    .lock-input-wrap input { flex: 1; }
+    .lock-btn { padding: 9px 20px; background: var(--green); border: none; border-radius: var(--radius); color: white; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+    .lock-btn:hover { background: var(--green-dark); }
+
+    /* 대시보드 */
+    .dash-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+    .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.9rem 1rem; }
+    .stat-label { font-size: 12px; color: var(--text-sub); margin-bottom: 5px; }
+    .stat-num { font-size: 24px; font-weight: 600; }
+    .section-title { font-size: 14px; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+    .dash-filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 1.25rem; }
+    .f-label { font-size: 13px; color: var(--text-sub); }
+    .ftag { padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); font-size: 13px; cursor: pointer; background: var(--card); color: var(--text-sub); }
+    .ftag.on { background: var(--green-light); border-color: var(--green); color: var(--green-dark); font-weight: 600; }
+    .search-row { display: flex; gap: 8px; margin-bottom: 1rem; }
+    .search-row input { flex: 1; }
+    .search-row select { width: 200px; flex-shrink: 0; }
+    .top-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center; justify-content: space-between; }
+    .top-actions-left { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    /* 엔트리 카드 */
+    .entries-list { display: flex; flex-direction: column; gap: 10px; }
+    .entry-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; cursor: pointer; transition: border-color 0.15s; }
+    .entry-card:hover { border-color: #ccc; }
+    .entry-card.expanded { border-color: var(--green); }
+    .entry-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .entry-left { flex: 1; }
+    .entry-who { font-size: 14px; font-weight: 600; }
+    .entry-date { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
+    .entry-topic { font-size: 12px; color: var(--blue); margin-top: 3px; }
+    .tag-row { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
+    .tag { font-size: 11px; padding: 2px 9px; border-radius: 20px; font-weight: 500; }
+    .tag-learn { background: var(--green-light); color: var(--green-dark); }
+    .tag-wonder { background: var(--amber-light); color: var(--amber); }
+    .tag-question { background: var(--blue-light); color: var(--blue); }
+    .alert-badge { font-size: 11px; padding: 2px 9px; border-radius: 20px; background: var(--red-light); color: var(--red); font-weight: 600; margin-left: 6px; }
+    .chevron { font-size: 18px; color: var(--text-sub); transition: transform 0.2s; margin-left: 8px; }
+    .entry-card.expanded .chevron { transform: rotate(180deg); }
+    .entry-body { display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    .entry-card.expanded .entry-body { display: block; }
+    .ebody-section { margin-bottom: 14px; }
+    .ebody-label { font-size: 12px; font-weight: 600; color: var(--text-sub); margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+    .ebody-text { font-size: 14px; line-height: 1.75; }
+    .ai-note { background: var(--amber-light); border-radius: var(--radius); padding: 10px 14px; margin-top: 8px; }
+    .ai-note-label { font-size: 12px; color: var(--amber); font-weight: 600; margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
+    .ai-note-text { font-size: 13px; color: #633806; line-height: 1.6; }
+    .student-group { margin-bottom: 1.25rem; }
+    .student-group-header { font-size: 13px; font-weight: 600; color: var(--text-sub); padding: 6px 0; border-bottom: 1px solid var(--border); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
+    .reset-pw-btn { font-size: 12px; padding: 3px 10px; border: 1px solid var(--border); border-radius: 20px; background: var(--card); cursor: pointer; color: var(--text-sub); }
+    .reset-pw-btn:hover { background: var(--red-light); color: var(--red); border-color: var(--red); }
+    .empty { text-align: center; padding: 3rem 1rem; color: var(--text-sub); font-size: 14px; line-height: 1.8; }
+    .loading-msg { text-align: center; padding: 2rem; color: var(--text-sub); font-size: 14px; }
+
+    /* 초기화 섹션 */
+    .danger-section { background: var(--red-light); border: 1px solid #ffcccc; border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-top: 2rem; }
+    .danger-title { font-size: 14px; font-weight: 600; color: var(--red); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 6px; }
+    .danger-desc { font-size: 13px; color: #7a2020; margin-bottom: 1rem; line-height: 1.6; }
+
+    /* 모달 */
+    .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; align-items: center; justify-content: center; }
+    .modal-bg.show { display: flex; }
+    .modal { background: var(--card); border-radius: var(--radius-lg); padding: 2rem; width: 90%; max-width: 420px; }
+    .modal-title { font-size: 16px; font-weight: 600; margin-bottom: 0.5rem; color: var(--red); }
+    .modal-desc { font-size: 13px; color: var(--text-sub); margin-bottom: 1.25rem; line-height: 1.6; }
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+    .modal-cancel { padding: 9px 18px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); font-size: 14px; cursor: pointer; color: var(--text-sub); }
+    .modal-confirm { padding: 9px 18px; background: var(--red); border: none; border-radius: var(--radius); color: white; font-size: 14px; font-weight: 600; cursor: pointer; }
+
+    @media(max-width:600px){
+      .dash-stats{grid-template-columns:repeat(2,1fr)}
+      .search-row{flex-direction:column}
+      .search-row select{width:100%}
+      .top-actions{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="header-icon">🔬</div>
+    <div>
+      <div class="header-title">과학 생각 노트 — 교사 대시보드</div>
+      <div class="header-sub">중1 과학 · 학생 기록 관리</div>
+    </div>
+  </div>
+
+  <!-- 잠금 화면 -->
+  <div id="lock-wrap" class="lock-wrap">
+    <div class="lock-card">
+      <div class="lock-icon">🔒</div>
+      <div class="lock-title">교사 전용 페이지</div>
+      <div class="lock-sub">교사 비밀번호를 입력하세요</div>
+      <div class="lock-input-wrap">
+        <input type="password" id="pw-input" placeholder="비밀번호 입력" onkeydown="if(event.key==='Enter')checkPw()" />
+        <button class="lock-btn" onclick="checkPw()">확인</button>
+      </div>
+      <div class="err" id="pw-err" style="text-align:center;margin-top:10px"></div>
+    </div>
+  </div>
+
+  <!-- 대시보드 -->
+  <div id="dash" style="display:none">
+    <div class="dash-stats">
+      <div class="stat-card"><div class="stat-label">전체 기록</div><div class="stat-num" id="stat-total">—</div></div>
+      <div class="stat-card"><div class="stat-label">참여 학생</div><div class="stat-num" id="stat-students">—</div></div>
+      <div class="stat-card"><div class="stat-label">오개념 의심</div><div class="stat-num" style="color:var(--red)" id="stat-flag">—</div></div>
+      <div class="stat-card"><div class="stat-label">질문 있음</div><div class="stat-num" style="color:var(--blue)" id="stat-q">—</div></div>
+    </div>
+
+    <div class="top-actions">
+      <div class="top-actions-left">
+        <button class="btn-outline" onclick="renderDashboard()"><i class="ti ti-refresh"></i> 새로고침</button>
+        <button class="btn-outline" onclick="downloadCSV()"><i class="ti ti-download"></i> CSV 다운로드</button>
+      </div>
+    </div>
+
+    <div class="dash-filters">
+      <span class="f-label">필터:</span>
+      <button class="ftag on" onclick="setFilter('all',this)">전체</button>
+      <button class="ftag" onclick="setFilter('wonder',this)">헷갈리는 점</button>
+      <button class="ftag" onclick="setFilter('question',this)">궁금한 점</button>
+      <button class="ftag" onclick="setFilter('flag',this)">⚠️ 오개념 의심</button>
+    </div>
+
+    <div class="search-row">
+      <input type="text" id="search-name" placeholder="이름 또는 반 검색..." oninput="renderDashboard()" />
+      <select id="filter-unit" onchange="renderDashboard()"><option value="">전체 단원</option></select>
+    </div>
+
+    <div class="entries-list" id="entries-list"><div class="loading-msg">불러오는 중...</div></div>
+
+    <!-- 위험 구역 -->
+    <div class="danger-section">
+      <div class="danger-title"><i class="ti ti-alert-triangle"></i> 데이터 초기화 (연도 말 사용)</div>
+      <div class="danger-desc">
+        초기화하면 <strong>모든 학생 기록과 비밀번호</strong>가 삭제됩니다.<br>
+        반드시 CSV를 먼저 다운로드한 후 초기화하세요.<br>
+        이 작업은 되돌릴 수 없습니다.
+      </div>
+      <button class="btn-red" onclick="showResetModal()"><i class="ti ti-trash"></i> 전체 데이터 초기화</button>
+    </div>
+  </div>
+</div>
+
+<!-- 초기화 확인 모달 -->
+<div class="modal-bg" id="reset-modal">
+  <div class="modal">
+    <div class="modal-title">⚠️ 전체 데이터 초기화</div>
+    <div class="modal-desc">
+      모든 학생 기록과 비밀번호가 <strong>영구 삭제</strong>됩니다.<br>
+      계속하려면 교사 비밀번호를 다시 입력하세요.
+    </div>
+    <div style="margin-bottom:1rem">
+      <input type="password" id="reset-confirm-pw" placeholder="교사 비밀번호 재입력" />
+    </div>
+    <div class="err" id="reset-err" style="margin-bottom:0.75rem"></div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="hideResetModal()">취소</button>
+      <button class="modal-confirm" onclick="doReset()">초기화 실행</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://yxbruzxavuncxsyyidcs.supabase.co';
+const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4YnJ1enhhdnVuY3hzeXlpZGNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyODEyMjksImV4cCI6MjA5Njg1NzIyOX0.4bTYBICQRQZDEO2RN8pKrnTqUtOMQfRGR58EJ4Yuz54';
+
+// SHA-256 해시 (vpfmalskchekd*26)
+const TEACHER_PW_HASH = 'e240826a3e44ab5a1ab51b645223372bbc43d0caf70f59242c94494566a62e3b';
+
+const CURRICULUM = [
+  { unit: '1단원. 과학과 인류의 지속가능한 삶', topics: ['과학적 탐구 방법','과학과 인류 문명','첨단 과학기술과 미래사회','과학기술과 지속가능한 삶','지속가능한 삶을 위한 활동 방안 실천하기'] },
+  { unit: '2단원. 생물의 구성과 다양성', topics: ['세포','생물의 구성 단계','생물다양성','생물의 분류 방법','생물의 분류','생물다양성 보전의 필요성','생물다양성 유지 방안과 실천','생물다양성 보전 놀이 활동하기'] },
+  { unit: '3단원. 열', topics: ['온도와 입자 운동','열평형','열의 이동','비열','열팽창'] },
+  { unit: '4단원. 물질의 상태 변화', topics: ['입자의 운동','물질의 상태','물질의 상태 변화','상태 변화와 입자 배열의 변화','열에너지를 흡수하는 상태 변화','열에너지를 방출하는 상태 변화','상태 변화와 열에너지의 이용'] },
+  { unit: '5단원. 힘의 작용', topics: ['힘의 표현','힘의 평형','중력','탄성력','마찰력','부력','힘이 작용할 때 물체의 운동','여러 가지 상황에서 작용하는 힘','힘의 특징을 이용한 장치 설계하기'] },
+  { unit: '6단원. 기체의 성질', topics: ['기체의 압력','기체의 압력과 부피 관계','생활 속 기체의 압력과 부피 관계','기체의 온도와 부피 관계','생활 속 기체의 온도와 부피 관계'] },
+  { unit: '7단원. 태양계', topics: ['태양계의 구성 천체','태양계 행성 분류','태양의 활동','지구의 자전과 천체의 겉보기 운동','지구의 공전과 별자리 변화','달의 위상 변화','일식과 월식'] }
+];
+
+(function init() {
+  CURRICULUM.forEach((c, i) => {
+    const o = document.createElement('option'); o.value = i; o.textContent = c.unit;
+    document.getElementById('filter-unit').appendChild(o);
+  });
+})();
+
+async function sha256(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function checkPw() {
+  const val = document.getElementById('pw-input').value;
+  const hash = await sha256(val);
+  if (hash === TEACHER_PW_HASH) {
+    document.getElementById('lock-wrap').style.display = 'none';
+    document.getElementById('dash').style.display = 'block';
+    renderDashboard();
+  } else {
+    document.getElementById('pw-err').textContent = '비밀번호가 틀렸습니다.';
+    document.getElementById('pw-input').value = '';
+  }
+}
+
+async function sbRequest(path, method, body) {
+  const opts = {
+    method: method || 'GET',
+    headers: {
+      'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': method === 'POST' ? 'return=minimal' : 'return=representation'
+    }
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, opts);
+  const text = await res.text();
+  if (!res.ok) throw new Error(text);
+  return text ? JSON.parse(text) : null;
+}
+
+async function resetStudentPw(cls, num) {
+  if (!confirm(`${cls} ${num}번 학생의 비밀번호를 7777로 초기화할까요?`)) return;
+  try {
+    await sbRequest(`student_passwords?cls=eq.${encodeURIComponent(cls)}&num=eq.${num}`, 'PATCH', { password: '7777', updated_at: new Date().toISOString() });
+    alert(`${cls} ${num}번 비밀번호가 7777로 초기화됐습니다.`);
+  } catch(e) { alert('초기화 오류: ' + e.message); }
+}
+
+let currentFilter = 'all';
+let allData = [];
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.ftag').forEach(t => t.classList.remove('on'));
+  btn.classList.add('on');
+  renderList();
+}
+
+async function renderDashboard() {
+  const listEl = document.getElementById('entries-list');
+  listEl.innerHTML = '<div class="loading-msg">불러오는 중...</div>';
+  try {
+    allData = await sbRequest('entries?select=*&order=created_at.asc', 'GET') || [];
+    document.getElementById('stat-total').textContent = allData.length;
+    const uniq = new Set(allData.map(e => e.cls + e.num + e.name));
+    document.getElementById('stat-students').textContent = uniq.size;
+    document.getElementById('stat-flag').textContent = allData.filter(e => e.flagged).length;
+    document.getElementById('stat-q').textContent = allData.filter(e => e.question).length;
+    renderList();
+  } catch(e) {
+    listEl.innerHTML = `<div class="empty">데이터를 불러오지 못했어요.<br><small style="color:var(--red)">${e.message}</small></div>`;
+  }
+}
+
+function renderList() {
+  const listEl = document.getElementById('entries-list');
+  const searchVal = (document.getElementById('search-name').value || '').trim().toLowerCase();
+  const unitVal = document.getElementById('filter-unit').value;
+  let filtered = [...allData];
+  if (currentFilter === 'wonder') filtered = filtered.filter(e => e.wonder);
+  else if (currentFilter === 'question') filtered = filtered.filter(e => e.question);
+  else if (currentFilter === 'flag') filtered = filtered.filter(e => e.flagged);
+  if (searchVal) filtered = filtered.filter(e => (e.name + e.cls).toLowerCase().includes(searchVal));
+  if (unitVal !== '') filtered = filtered.filter(e => e.unit === CURRICULUM[parseInt(unitVal)].unit);
+
+  if (filtered.length === 0) { listEl.innerHTML = '<div class="empty">해당 조건의 기록이 없어요.</div>'; return; }
+
+  const grouped = {};
+  filtered.forEach(e => {
+    const key = e.cls + '|' + e.num + '|' + e.name;
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(e);
+  });
+
+  listEl.innerHTML = '';
+  Object.entries(grouped).forEach(([key, entries]) => {
+    const [cls, num, name] = key.split('|');
+    const grp = document.createElement('div');
+    grp.className = 'student-group';
+    grp.innerHTML = `
+      <div class="student-group-header">
+        <span><i class="ti ti-user"></i> ${cls} ${num}번 ${name} <span style="font-weight:400;font-size:12px">· ${entries.length}개 기록</span></span>
+        <button class="reset-pw-btn" onclick="resetStudentPw('${cls}',${num})">🔑 비번 초기화</button>
+      </div>`;
+    entries.slice().reverse().forEach(e => {
+      const card = document.createElement('div');
+      card.className = 'entry-card';
+      card.innerHTML = `
+        <div class="entry-header">
+          <div class="entry-left">
+            <div class="entry-who">${e.month}월 ${e.day}일 ${e.weekday}${e.flagged?'<span class="alert-badge">⚠️ 오개념 의심</span>':''}</div>
+            <div class="entry-topic"><i class="ti ti-book" style="font-size:12px"></i> ${e.unit.split('.')[0]}. ${e.topic}</div>
+          </div>
+          <i class="ti ti-chevron-down chevron"></i>
+        </div>
+        <div class="tag-row">
+          ${e.learn?'<span class="tag tag-learn">✅ 배운 점</span>':''}
+          ${e.wonder?'<span class="tag tag-wonder">🤔 헷갈리는 점</span>':''}
+          ${e.question?'<span class="tag tag-question">💡 궁금한 점</span>':''}
+        </div>
+        <div class="entry-body">
+          ${e.learn?`<div class="ebody-section"><div class="ebody-label" style="color:var(--green-dark)"><i class="ti ti-check"></i> 오늘 배운 점</div><div class="ebody-text">${esc(e.learn)}</div></div>`:''}
+          ${e.wonder?`<div class="ebody-section"><div class="ebody-label" style="color:var(--amber)"><i class="ti ti-help"></i> 헷갈리는 점</div><div class="ebody-text">${esc(e.wonder)}</div>${e.flagged?`<div class="ai-note"><div class="ai-note-label"><i class="ti ti-alert-triangle"></i> 오개념 의심 포인트</div><div class="ai-note-text">학생이 기존 지식과 상충하는 내용을 인식하고 있습니다. 다음 수업에서 확인·교정이 필요할 수 있어요.</div></div>`:''}</div>`:''}
+          ${e.question?`<div class="ebody-section"><div class="ebody-label" style="color:var(--blue)"><i class="ti ti-bulb"></i> 더 알고 싶은 점</div><div class="ebody-text">${esc(e.question)}</div></div>`:''}
+        </div>`;
+      card.onclick = () => card.classList.toggle('expanded');
+      grp.appendChild(card);
+    });
+    listEl.appendChild(grp);
+  });
+}
+
+// CSV 다운로드
+function downloadCSV() {
+  if (!allData.length) { alert('다운로드할 데이터가 없어요.'); return; }
+  const headers = ['반','번호','이름','단원','소주제','월','일','요일','배운 점','헷갈리는 점','궁금한 점','오개념 의심','기록 일시'];
+  const rows = allData.map(e => [
+    e.cls, e.num, e.name, e.unit, e.topic,
+    e.month, e.day, e.weekday,
+    e.learn || '', e.wonder || '', e.question || '',
+    e.flagged ? '예' : '아니오',
+    e.created_at ? e.created_at.slice(0,10) : ''
+  ].map(v => '"' + String(v).replace(/"/g,'""') + '"').join(','));
+
+  const csv = '\uFEFF' + [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const year = new Date().getFullYear();
+  a.href = url; a.download = `과학생각노트_${year}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+// 초기화 모달
+function showResetModal() {
+  document.getElementById('reset-confirm-pw').value = '';
+  document.getElementById('reset-err').textContent = '';
+  document.getElementById('reset-modal').classList.add('show');
+}
+function hideResetModal() {
+  document.getElementById('reset-modal').classList.remove('show');
+}
+
+async function doReset() {
+  const val = document.getElementById('reset-confirm-pw').value;
+  const hash = await sha256(val);
+  const errEl = document.getElementById('reset-err');
+  if (hash !== TEACHER_PW_HASH) { errEl.textContent = '비밀번호가 틀렸습니다.'; return; }
+  errEl.textContent = '';
+  try {
+    // entries 전체 삭제
+    await sbRequest('entries?id=gte.0', 'DELETE');
+    // student_passwords 전체 삭제
+    await sbRequest('student_passwords?id=gte.0', 'DELETE');
+    hideResetModal();
+    allData = [];
+    document.getElementById('stat-total').textContent = '0';
+    document.getElementById('stat-students').textContent = '0';
+    document.getElementById('stat-flag').textContent = '0';
+    document.getElementById('stat-q').textContent = '0';
+    document.getElementById('entries-list').innerHTML = '<div class="empty">모든 데이터가 초기화됐습니다.<br>새 학년도 사용 준비 완료!</div>';
+    alert('✅ 초기화 완료! 학생들이 다시 7777로 로그인할 수 있습니다.');
+  } catch(e) {
+    errEl.textContent = '초기화 오류: ' + e.message;
+  }
+}
+
+function esc(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+</script>
+</body>
+</html>
